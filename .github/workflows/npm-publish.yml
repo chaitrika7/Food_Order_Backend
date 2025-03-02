@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t nayadevacr.azurecr.io/nodejs-app:latest Deployments\ .
+        run: docker build -t nayadevacr.azurecr.io/nodejs-app:latest ./Deployments/.
 
       - name: Push Docker image to ACR
         run: docker push nayadevacr.azurecr.io/nodejs-app:latest
