@@ -46,6 +46,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
 
       - name: Set AKS context
         run: az aks get-credentials --resource-group naya-dev-ind-cs-rg --name naya-dev-ind-cs-aks
