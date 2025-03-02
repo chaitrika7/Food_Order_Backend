@@ -29,24 +29,24 @@ jobs:
       - name: Push Docker image to ACR
         run: docker push nayadevacr.azurecr.io/nodejs-app:latest
 
-  #git deploy:
-  #git   needs: build
-  #git   runs-on: ubuntu-latest
-#git 
-  #git   steps:
-  #git     - name: Checkout code
-  #git       uses: actions/checkout@v2
-#git 
-  #git     - name: Set up Azure CLI
-  #git       uses: azure/CLI@v1
-#git 
-  #git     - name: Login to Azure
-  #git       uses: azure/login@v1
-  #git       with:
-  #git         creds: ${{ secrets.AZURE_CREDENTIALS }}
-#git 
-  #git     - name: Set AKS context
-  #git       run: az aks get-credentials --resource-group <your-resource-group> --name <your-aks-cluster>
-#git 
-  #git     - name: Deploy to AKS
-  #git       run: kubectl apply -f k8s/deployment.yaml
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Azure CLI
+        uses: azure/CLI@v1
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS context
+        run: az aks get-credentials --resource-group naya-dev-ind-cs-rg --name naya-dev-ind-cs-aks
+
+      - name: Deploy to AKS
+        run: kubectl apply -f ./Deployments/dev/deployment.yml
